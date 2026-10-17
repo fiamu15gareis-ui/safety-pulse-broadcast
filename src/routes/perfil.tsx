@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { cargarPerfil, guardarPerfil, personaVacia, type Perfil, type Persona } from "@/lib/sos";
+import { cargarPerfil, guardarPerfil, personaVacia, SERVICIOS, type Perfil, type Persona, type Servicio } from "@/lib/sos";
 
 export const Route = createFileRoute("/perfil")({
   head: () => ({
@@ -66,7 +66,29 @@ function PerfilPage() {
       <div className="space-y-3 rounded-xl border border-border bg-card p-4">
         <Campo label="Dirección" value={perfil.direccion} onChange={(direccion) => upd({ direccion })} />
         <Campo label="Teléfono de contacto" value={perfil.telefono} onChange={(telefono) => upd({ telefono })} />
-        <Campo label="Frecuencia de transmisión (MHz)" value={perfil.frecuencia} onChange={(frecuencia) => upd({ frecuencia })} />
+      </div>
+
+      <div className="rounded-xl border border-border bg-card p-4">
+        <span className="text-xs text-muted-foreground">Servicio de emergencia a contactar</span>
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          {(Object.keys(SERVICIOS) as Servicio[]).map((s) => (
+            <button
+              key={s}
+              onClick={() => upd({ servicio: s })}
+              className={`rounded-lg border py-3 text-center text-sm transition-colors ${
+                perfil.servicio === s
+                  ? "border-primary bg-primary/10 font-semibold text-primary"
+                  : "border-border text-muted-foreground"
+              }`}
+            >
+              {SERVICIOS[s].nombre}
+              <span className="mt-1 block font-mono text-[10px]">{SERVICIOS[s].frecuencia} MHz</span>
+            </button>
+          ))}
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          La app asigna automáticamente la frecuencia de radio del servicio elegido.
+        </p>
       </div>
 
       <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Grupo familiar</h2>

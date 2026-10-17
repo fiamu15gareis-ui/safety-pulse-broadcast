@@ -8,15 +8,23 @@ export type Persona = {
   parentesco: string;
 };
 
+export type Servicio = "bomberos" | "hospital" | "policia";
+
+export const SERVICIOS: Record<Servicio, { nombre: string; frecuencia: string }> = {
+  bomberos: { nombre: "Bomberos", frecuencia: "152.360" },
+  hospital: { nombre: "Hospital", frecuencia: "149.870" },
+  policia: { nombre: "Policía", frecuencia: "148.375" },
+};
+
 export type Perfil = {
   titular: Persona;
   direccion: string;
   telefono: string;
   familia: Persona[];
-  frecuencia: string;
+  servicio: Servicio;
 };
 
-const KEY = "sos-perfil-v1";
+const KEY = "sos-perfil-v2";
 
 export const personaVacia = (parentesco = ""): Persona => ({
   id: Math.random().toString(36).slice(2),
@@ -34,7 +42,7 @@ export function perfilVacio(): Perfil {
     direccion: "",
     telefono: "",
     familia: [],
-    frecuencia: "146.520",
+    servicio: "bomberos",
   };
 }
 
@@ -58,9 +66,10 @@ export function armarPaquete(
   conectado: boolean,
 ) {
   const pos = coords ? `${coords.lat.toFixed(5)},${coords.lon.toFixed(5)}` : "SIN_GPS";
-  if (!conectado) return `SOS|${pos}`;
+  const servicio = SERVICIOS[perfil.servicio];
+  if (!conectado) return `SOS|${servicio.frecuencia}|${pos}`;
   const personas = [perfil.titular, ...perfil.familia]
     .map((p) => `${p.nombre};${p.edad};${p.sangre};${p.condiciones}`)
     .join("/");
-  return `SOS|${pos}|${perfil.telefono}|${perfil.direccion}|${personas}`;
+  return `SOS|${servicio.frecuencia}|${pos}|${perfil.telefono}|${perfil.direccion}|${personas}`;
 }

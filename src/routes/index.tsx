@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { armarPaquete, cargarPerfil, type Perfil } from "@/lib/sos";
+import { armarPaquete, cargarPerfil, SERVICIOS, type Perfil } from "@/lib/sos";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -45,13 +45,15 @@ function Emergencia() {
     setEstado("ubicando");
     setLog([]);
     add("Obteniendo coordenadas GPS…");
-    const seguir = (coords: { lat: number; lon: number } | null) => {
+      const seguir = (coords: { lat: number; lon: number } | null) => {
       const pkt = armarPaquete(perfil, coords, online);
+      const servicio = SERVICIOS[perfil.servicio];
       setPaquete(pkt);
       setEstado("enviando");
       add(online ? "Con conectividad: paquete completo" : "Sin conectividad: solo coordenadas");
+      add(`Contactando a ${servicio.nombre} (frecuencia asignada: ${servicio.frecuencia} MHz)`);
       add("Conectando con transmisor (Bluetooth, simulado)…");
-      setTimeout(() => add(`Transmitiendo en ${perfil.frecuencia} MHz…`), 900);
+      setTimeout(() => add(`Transmitiendo en ${servicio.frecuencia} MHz…`), 900);
       setTimeout(() => {
         add(`Enviado (${pkt.length} bytes)`);
         setEstado("enviado");
@@ -87,7 +89,9 @@ function Emergencia() {
         <span className={`chip ${online ? "chip-ok" : "chip-warn"}`}>
           {online ? "● Con conectividad" : "● Sin señal"}
         </span>
-        <span className="chip">📻 {perfil?.frecuencia ?? "—"} MHz</span>
+        <span className="chip">
+          📻 {perfil ? `${SERVICIOS[perfil.servicio].nombre} · ${SERVICIOS[perfil.servicio].frecuencia} MHz` : "—"}
+        </span>
       </div>
 
       {sinDatos && (
