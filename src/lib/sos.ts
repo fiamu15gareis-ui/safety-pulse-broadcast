@@ -49,7 +49,12 @@ export function perfilVacio(): Perfil {
 export function cargarPerfil(): Perfil {
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? { ...perfilVacio(), ...JSON.parse(raw) } : perfilVacio();
+    if (!raw) return perfilVacio();
+    const p = { ...perfilVacio(), ...JSON.parse(raw) } as Perfil;
+    if (!(p.servicio in SERVICIOS)) p.servicio = "bomberos";
+    if (!p.titular) p.titular = personaVacia("Titular");
+    if (!Array.isArray(p.familia)) p.familia = [];
+    return p;
   } catch {
     return perfilVacio();
   }
