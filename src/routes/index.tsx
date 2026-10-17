@@ -77,7 +77,7 @@ function Emergencia() {
   const sinDatos = perfil && !perfil.titular.nombre;
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col px-5 pb-8 pt-6">
+    <main className="mx-auto flex min-h-screen w-full max-w-[390px] flex-col border-x border-border/60 px-5 pb-8 pt-6 sm:px-5">
       <header className="flex items-center justify-between">
         <h1 className="font-display text-2xl tracking-wide">SOS RADIO</h1>
         <Link to="/perfil" className="rounded-full border border-border px-4 py-2 text-sm">

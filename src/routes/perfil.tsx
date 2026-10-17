@@ -54,7 +54,7 @@ function PerfilPage() {
   const upd = (p: Partial<Perfil>) => { setOk(false); setPerfil({ ...perfil, ...p }); };
 
   return (
-    <main className="mx-auto max-w-md space-y-5 px-5 pb-28 pt-6">
+    <main className="mx-auto w-full max-w-[390px] space-y-5 border-x border-border/60 px-5 pb-28 pt-6">
       <header className="flex items-center justify-between">
         <Link to="/" className="text-sm text-muted-foreground">← SOS</Link>
         <h1 className="font-display text-2xl tracking-wide">MIS DATOS</h1>
@@ -107,7 +107,7 @@ function PerfilPage() {
       <div className="fixed inset-x-0 bottom-0 bg-background/90 p-4 backdrop-blur">
         <button
           onClick={() => { guardarPerfil(perfil); setOk(true); }}
-          className="mx-auto block w-full max-w-md rounded-xl bg-primary py-4 font-semibold text-primary-foreground"
+          className="mx-auto block w-full max-w-[390px] rounded-xl bg-primary py-4 font-semibold text-primary-foreground"
         >
           {ok ? "✓ Guardado en el dispositivo" : "Guardar"}
         </button>
