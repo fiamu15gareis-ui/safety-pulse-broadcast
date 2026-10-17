@@ -52,7 +52,7 @@ function Emergencia() {
       setEstado("enviando");
       add(online ? "Con conectividad: paquete completo" : "Sin conectividad: solo coordenadas");
       add(`Contactando a ${servicio.nombre} (frecuencia asignada: ${servicio.frecuencia} MHz)`);
-      add("Conectando con transmisor (Bluetooth, simulado)…");
+      add("Enviando al transmisor por cable USB (simulado)…");
       setTimeout(() => add(`Transmitiendo en ${servicio.frecuencia} MHz…`), 900);
       setTimeout(() => {
         add(`Enviado (${pkt.length} bytes)`);
