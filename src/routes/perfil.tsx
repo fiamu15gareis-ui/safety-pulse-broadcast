@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { cargarPerfil, guardarPerfil, personaVacia, type Perfil, type Persona } from "@/lib/sos";
+import { cargarPerfil, guardarPerfil, personaVacia, SERVICIOS, type Perfil, type Persona, type Servicio } from "@/lib/sos";
 
 export const Route = createFileRoute("/perfil")({
   head: () => ({

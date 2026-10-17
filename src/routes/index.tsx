@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { armarPaquete, cargarPerfil, type Perfil } from "@/lib/sos";
+import { armarPaquete, cargarPerfil, SERVICIOS, type Perfil } from "@/lib/sos";
 
 export const Route = createFileRoute("/")({
   head: () => ({
