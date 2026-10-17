@@ -89,7 +89,9 @@ function Emergencia() {
         <span className={`chip ${online ? "chip-ok" : "chip-warn"}`}>
           {online ? "● Con conectividad" : "● Sin señal"}
         </span>
-        <span className="chip">📻 {perfil?.frecuencia ?? "—"} MHz</span>
+        <span className="chip">
+          📻 {perfil ? `${SERVICIOS[perfil.servicio].nombre} · ${SERVICIOS[perfil.servicio].frecuencia} MHz` : "—"}
+        </span>
       </div>
 
       {sinDatos && (
