@@ -66,9 +66,10 @@ export function armarPaquete(
   conectado: boolean,
 ) {
   const pos = coords ? `${coords.lat.toFixed(5)},${coords.lon.toFixed(5)}` : "SIN_GPS";
-  if (!conectado) return `SOS|${pos}`;
+  const servicio = SERVICIOS[perfil.servicio];
+  if (!conectado) return `SOS|${servicio.frecuencia}|${pos}`;
   const personas = [perfil.titular, ...perfil.familia]
     .map((p) => `${p.nombre};${p.edad};${p.sangre};${p.condiciones}`)
     .join("/");
-  return `SOS|${pos}|${perfil.telefono}|${perfil.direccion}|${personas}`;
+  return `SOS|${servicio.frecuencia}|${pos}|${perfil.telefono}|${perfil.direccion}|${personas}`;
 }
