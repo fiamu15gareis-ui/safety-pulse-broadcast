@@ -45,13 +45,15 @@ function Emergencia() {
     setEstado("ubicando");
     setLog([]);
     add("Obteniendo coordenadas GPS…");
-    const seguir = (coords: { lat: number; lon: number } | null) => {
+      const seguir = (coords: { lat: number; lon: number } | null) => {
       const pkt = armarPaquete(perfil, coords, online);
+      const servicio = SERVICIOS[perfil.servicio];
       setPaquete(pkt);
       setEstado("enviando");
       add(online ? "Con conectividad: paquete completo" : "Sin conectividad: solo coordenadas");
+      add(`Contactando a ${servicio.nombre} (frecuencia asignada: ${servicio.frecuencia} MHz)`);
       add("Conectando con transmisor (Bluetooth, simulado)…");
-      setTimeout(() => add(`Transmitiendo en ${perfil.frecuencia} MHz…`), 900);
+      setTimeout(() => add(`Transmitiendo en ${servicio.frecuencia} MHz…`), 900);
       setTimeout(() => {
         add(`Enviado (${pkt.length} bytes)`);
         setEstado("enviado");
